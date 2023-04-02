@@ -1,6 +1,6 @@
 // apis and api keys
-var apiURLCurrent = "https://api.openweathermap.org/data/2.5/forecast?"
-var apiURLGeo = "https://api.openweathermap.org/geo/1.0/direct?"
+var apiURLCurrent = "http://api.openweathermap.org/data/2.5/forecast?"
+var apiURLGeo = "http://api.openweathermap.org/geo/1.0/direct?"
 var apikey = "284e017fe4417a22737b6a6dd8129bea"
 
 var searchInput = undefined;
