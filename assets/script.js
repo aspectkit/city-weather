@@ -1,3 +1,4 @@
+// apis and api keys
 var apiURLCurrent = "https://api.openweathermap.org/data/2.5/forecast?"
 var apiURLGeo = "http://api.openweathermap.org/geo/1.0/direct?"
 var apikey = "284e017fe4417a22737b6a6dd8129bea"
@@ -21,6 +22,7 @@ function delay(milliseconds) {
     });
 }
 
+// this function gets the lat and lon data from the geo api
 async function getCoordinates(){
     var url = apiURLGeo + "q=" + searchInput + "&appid=" + apikey; 
     
@@ -33,14 +35,14 @@ async function getCoordinates(){
             lon = data[0].lon;
         });
     
-    await delay(2000);
+    await delay(500);
     getCurrentData();
 }
 
+// this function takes in all the weather data from the api and creates elements to display on screen
 function setInfo(cit, temp, hum, wind, icon){
     var cityEl = document.getElementById("city-name");
-    time = time.split(" ");
-    cityEl.innerHTML = cit + " " + time[0];
+    cityEl.innerHTML = cit + " " + time;
 
     var tempEl = document.getElementById("city-temp");
     tempEl.innerHTML = temp;
@@ -56,12 +58,14 @@ function setInfo(cit, temp, hum, wind, icon){
     iconEl.setAttribute("src",  iconUrl);
 }
 
+// this function reads what the user put in the search box, stores it, and then proceeds to get information from the api by calling getCoordinates()
 function getInput(){
     searchInput = document.getElementById("search-input").value;
     city = searchInput;
     getCoordinates();
 }
 
+// this function gets the information about the weather from the api
 async function getCurrentData(){
     var url = apiURLCurrent + "lat=" + lat + "&lon=" + lon + "&units=imperial" + "&appid=" + apikey;
     console.log(url);
@@ -79,11 +83,12 @@ async function getCurrentData(){
             console.log(data);
         });
 
-    await delay(1000);
+    await delay(500);
     setInfo(city, temperature, humidity, wind, icon, time);
     createHistoryButton();
 }
 
+// this function creates a button after the user has pressed search to store the results in the history
 function createHistoryButton(){
     var parentDivEl = document.getElementById("history");
     var divEl = document.createElement("div");
@@ -101,6 +106,7 @@ function createHistoryButton(){
     var currentTemp = temperature;
     var currentHum = humidity;
     var currentWind = wind;
+    var currentTime = time;
     buttonEl.addEventListener("click", function(){
         setInfo(currentCity, currentTemp, currentHum, currentWind, currentIcon, time);
     });
@@ -109,6 +115,7 @@ function createHistoryButton(){
     parentDivEl.appendChild(divEl);
 }
 
+// event to get weather information when clicked
 searchButton.addEventListener("click", function(){
     getInput();
 });
